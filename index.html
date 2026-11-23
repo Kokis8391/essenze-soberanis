@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESSENZE SOBERANIS | Perfumería y Decants</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            papel: '#FAF9F6',
+            tarjeta: '#FFFFFF',
+            tinta: '#111111',
+            suave: '#6E6A63',
+            borde: '#EAE6DF',
+            bronce: '#9A7B4F',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-papel text-tinta font-sans antialiased">
+
+  <!-- Franja superior negra -->
+  <div class="bg-tinta text-white text-[11px] tracking-[0.2em] uppercase py-2 px-4 text-center font-medium">
+    <span>Decants originales de 3 ml, 5 ml y 10 ml</span>
+    <span class="mx-3 text-neutral-500">|</span>
+    <span>Pedidos directos por WhatsApp</span>
+  </div>
+
+  <!-- Barra de navegación principal -->
+  <header class="bg-papel/95 backdrop-blur border-b border-borde sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Pestañas de categorías -->
+      <nav id="nav-tabs" class="flex items-center gap-5 sm:gap-7 text-[11px] tracking-[0.18em] uppercase font-medium overflow-x-auto">
+        <button data-cat="Todos" class="tab-link whitespace-nowrap text-tinta border-b border-tinta pb-1">Perfumería</button>
+        <button data-cat="Arabes" class="tab-link whitespace-nowrap text-suave hover:text-tinta pb-1 transition">Árabes</button>
+        <button data-cat="Disenador" class="tab-link whitespace-nowrap text-suave hover:text-tinta pb-1 transition">Diseñador</button>
+        <button data-cat="Decants" class="tab-link whitespace-nowrap text-suave hover:text-tinta pb-1 transition">Decants</button>
+      </nav>
+
+      <!-- Nombre de marca centrado -->
+      <a href="#" onclick="volverAlCatalogo()" class="font-serif text-xl sm:text-2xl tracking-[0.2em] uppercase font-medium text-tinta shrink-0">
+        ESSENZE SOBERANIS
+      </a>
+
+      <!-- Acciones derecha -->
+      <div class="flex items-center gap-4 sm:gap-6 text-[11px] tracking-[0.16em] uppercase font-medium">
+        <button onclick="volverAlCatalogo()" class="hidden md:inline text-suave hover:text-tinta transition">Catálogo</button>
+        <button onclick="abrirGuiaRapida()" class="hidden sm:inline text-suave hover:text-tinta transition">Asesor</button>
+        <button onclick="irAlPrimerProducto()" class="text-tinta hover:text-bronce transition font-semibold">Ver Ficha</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VISTA 1: CATÁLOGO GENERAL -->
+  <section id="vista-catalogo" class="max-w-7xl mx-auto px-4 sm:px-8 py-10">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <p class="text-[11px] tracking-[0.2em] uppercase text-suave mb-2">
+          Inicio / EssenZe Soberanis / <span id="migas-categoria" class="text-tinta">Todos</span>
+        </p>
+        <h1 class="font-serif text-4xl sm:text-5xl font-normal text-tinta leading-tight">
+          Catálogo de Fragancias
+        </h1>
+      </div>
+      <p class="text-sm text-suave max-w-md">
+        Selecciona cualquier fragancia para abrir su ficha, comparar 3 ml, 5 ml y 10 ml y enviar tu pedido directo por WhatsApp.
+      </p>
+    </div>
+
+    <div id="grid-perfumes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- VISTA 2: DETALLE DE PRODUCTO -->
+  <section id="vista-detalle" class="hidden max-w-7xl mx-auto px-4 sm:px-8 py-8">
+    <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+      <p id="detalle-breadcrumb" class="text-[11px] tracking-[0.18em] uppercase text-suave">
+        INICIO / ESSENZE SOBERANIS
+      </p>
+      <button onclick="volverAlCatalogo()" class="text-xs tracking-[0.14em] uppercase text-tinta hover:text-bronce underline underline-offset-4">
+        &larr; Volver al catálogo
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Columna izquierda: Miniaturas + Imagen principal -->
+      <div class="lg:col-span-7 bg-tarjeta border border-borde rounded-2xl p-5 sm:p-8 relative">
+        <div class="flex flex-col-reverse sm:flex-row gap-5">
+          <div class="flex sm:flex-col gap-3 shrink-0">
+            <button type="button" onclick="cambiarImagenActiva(0)" id="thumb-0"
+              class="w-16 h-16 rounded-xl border-2 border-tinta p-1 bg-papel overflow-hidden">
+              <img id="thumb-img-0" src="" alt="Vista 1" class="w-full h-full object-contain rounded-lg" />
+            </button>
+            <button type="button" onclick="cambiarImagenActiva(1)" id="thumb-1"
+              class="w-16 h-16 rounded-xl border border-borde p-1 bg-papel overflow-hidden hover:border-bronce transition">
+              <img id="thumb-img-1" src="" alt="Vista 2" class="w-full h-full object-contain rounded-lg" />
+            </button>
+          </div>
+
+          <div class="flex-1 flex items-center justify-center min-h-[340px] sm:min-h-[440px] bg-papel/50 rounded-xl p-4 relative">
+            <span class="absolute top-2 right-2 text-[11px] text-suave bg-tarjeta border border-borde px-2.5 py-1 rounded-full">
+              1/2
+            </span>
+            <img id="detalle-imagen" src="" alt="" class="max-h-[390px] w-auto object-contain transition duration-300" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Ficha, precios por ml y WhatsApp -->
+      <div class="lg:col-span-5 bg-tarjeta border border-borde rounded-2xl p-6 sm:p-9">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <span id="detalle-marca" class="text-xs tracking-[0.2em] uppercase font-semibold text-suave">
+            MARCA
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase font-semibold bg-[#E6F4EA] text-[#1E6B3A] px-3 py-1 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-[#1E6B3A]"></span>
+            Disponible
+          </span>
+        </div>
+
+        <h2 id="detalle-titulo" class="font-serif text-4xl sm:text-5xl font-normal text-tinta leading-[1.08] mb-5">
+          Nombre Fragancia
+        </h2>
+
+        <!-- Precio actual según mililitros -->
+        <div class="flex items-baseline gap-3 mb-2">
+          <span id="detalle-precio" class="text-3xl font-semibold text-tinta">$70</span>
+          <span class="text-xs uppercase tracking-wider text-bronce font-semibold">MXN</span>
+        </div>
+
+        <p class="text-xs text-suave pb-6 border-b border-borde">
+          Pedido directo por WhatsApp · Sin cobros con tarjeta en la web.
+        </p>
+
+        <!-- Descripción editorial en español -->
+        <p id="detalle-descripcion" class="text-sm sm:text-[15px] text-[#33312E] leading-relaxed mt-6"></p>
+
+        <!-- Notas olfativas -->
+        <div class="mt-5 bg-papel border border-borde rounded-xl p-4">
+          <p class="text-[11px] tracking-[0.16em] uppercase text-suave font-semibold mb-1">Notas principales</p>
+          <p id="detalle-notas" class="text-sm text-tinta"></p>
+        </div>
+
+        <!-- Selector de mililitros -->
+        <div class="mt-6">
+          <p class="text-[11px] tracking-[0.16em] uppercase text-suave font-semibold mb-2.5">
+            Selecciona tamaño (Decant)
+          </p>
+          <div id="detalle-opciones" class="flex flex-wrap gap-2.5"></div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="mt-7 pt-5 border-t border-borde flex flex-col sm:flex-row gap-3">
+          <button id="btn-pedir-wsp" class="flex-1 bg-tinta hover:bg-neutral-800 text-white text-xs tracking-[0.16em] uppercase font-semibold py-3.5 px-6 rounded-xl transition">
+            Pedir por WhatsApp
+          </button>
+          <button onclick="volverAlCatalogo()" class="border border-borde hover:border-tinta text-tinta text-xs tracking-[0.16em] uppercase font-medium py-3.5 px-5 rounded-xl transition">
+            Catálogo
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal sencillo de asesoría -->
+  <div id="modal-asesor" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+    <div class="bg-tarjeta border border-borde rounded-2xl max-w-md w-full p-6 relative">
+      <button onclick="cerrarAsesor()" class="absolute top-4 right-4 text-suave hover:text-tinta text-xl">&times;</button>
+      <span class="text-[11px] tracking-[0.2em] uppercase text-bronce font-semibold">Asesor EssenZe Soberanis</span>
+      <h3 class="font-serif text-3xl text-tinta mt-1 mb-3">Guía rápida de tamaños</h3>
+      <p class="text-sm text-suave leading-relaxed mb-4">
+        <strong>3 ml:</strong> ideal para probar en piel varios días.<br>
+        <strong>5 ml:</strong> perfecto para traer en mochila o salidas frecuentes.<br>
+        <strong>10 ml:</strong> rinde semanas completas para uso constante.
+      </p>
+      <button onclick="cerrarAsesor()" class="w-full bg-tinta text-white text-xs tracking-[0.16em] uppercase py-3 rounded-xl font-semibold">
+        Entendido
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const TELEFONO_WHATSAPP = "529994366762";
+
+    const fragancias = [
+      {
+        id: 1,
+        nombre: "Asad Bourbon",
+        marca: "LATTAFA",
+        categoria: "Arabes",
+        img: "img/asad.jpg",
+        imgSecundaria: "img/asad.jpg",
+        descripcion: "Aroma cálido, especiado y licoroso con un giro amaderado y dulce que destaca por su carácter envolvente para tarde y noche.",
+        notas: "Acorde licoroso tipo bourbon, especias cálidas, maderas oscuras y vainilla.",
+        precios: {
+          "3 ml": 70,
+          "5 ml": 90,
+          "10 ml": 180
+        }
+      },
+      {
+        id: 2,
+        nombre: "Mandarín Sky",
+        marca: "ARMAF",
+        categoria: "Disenador",
+        img: "img/mandarin.jpg",
+        imgSecundaria: "img/mandarin.jpg",
+        descripcion: "Salida cítrica vibrante de mandarina con un contraste dulce y moderno que se vuelve muy agradable y versátil en el día a día.",
+        notas: "Mandarina jugosa, caramelo suave, toque cítrico fresco y fondo dulce amaderado.",
+        precios: {
+          "3 ml": 65,
+          "5 ml": 85,
+          "10 ml": 170
+        }
+      },
+      {
+        id: 3,
+        nombre: "Halloween Man X",
+        marca: "JESUS DEL POZO",
+        categoria: "Disenador",
+        img: "img/halloween.jpg",
+        imgSecundaria: "img/halloween.jpg",
+        descripcion: "Fragancia nocturna con presencia marcada donde el café tostado y un toque licoroso se mezclan con especias y fondo cálido.",
+        notas: "Café tostado, whisky, cardamomo, canela, lavanda y haba tonka.",
+        precios: {
+          "3 ml": 65,
+          "5 ml": 85,
+          "10 ml": 170
+        }
+      },
+      {
+        id: 4,
+        nombre: "Valentino Uomo",
+        marca: "VALENTINO",
+        categoria: "Disenador",
+        img: "img/valentino.jpg",
+        imgSecundaria: "img/valentino.jpg",
+        descripcion: "Estilo elegante y equilibrado con frescura limpia y un fondo refinado que funciona tanto para oficina como para salidas casuales.",
+        notas: "Hoja de violeta, jengibre, salvia, notas minerales y vetiver.",
+        precios: {
+          "3 ml": 60,
+          "5 ml": 80,
+          "10 ml": 120
+        }
+      },
+      {
+        id: 5,
+        nombre: "9am Dive",
+        marca: "AFNAN",
+        categoria: "Arabes",
+        img: "img/afnan.jpg",
+        imgSecundaria: "img/afnan.jpg",
+        descripcion: "Frescura directa y dinámica pensada para climas cálidos y uso diario, con sensación limpia y chispeante desde la primera aplicación.",
+        notas: "Limón, menta, grosella negra, manzana verde, cedro e incienso suave.",
+        precios: {
+          "3 ml": 50,
+          "5 ml": 85,
+          "10 ml": 110
+        }
+      },
+      {
+        id: 6,
+        nombre: "Khamrah Qahwa",
+        marca: "LATTAFA",
+        categoria: "Arabes",
+        img: "img/khamrah.jpg",
+        imgSecundaria: "img/khamrah.jpg",
+        descripcion: "Cremosa, especiada y adictiva, uniendo el aroma del café árabe con canela, praliné y un dulzor profundo de larga duración.",
+        notas: "Café árabe, canela, cardamomo, praliné, vainilla y haba tonka.",
+        precios: {
+          "3 ml": 55,
+          "5 ml": 80,
+          "10 ml": 160
+        }
+      }
+    ];
+
+    let categoriaActiva = "Todos";
+    let productoActual = null;
+    let opcionActiva = null;
+
+    const formatMXN = (num) => "$" + Number(num).toLocaleString("es-MX");
+
+    function renderCatalogo() {
+      const grid = document.getElementById("grid-perfumes");
+      document.getElementById("migas-categoria").innerText = categoriaActiva;
+
+      const filtrados = (categoriaActiva === "Todos" || categoriaActiva === "Decants")
+        ? fragancias
+        : fragancias.filter(f => f.categoria === categoriaActiva);
+
+      grid.innerHTML = filtrados.map(item => {
+        const precioBase = item.precios["3 ml"] ?? Object.values(item.precios)[0];
+        return `
+          <article onclick="abrirDetalle(${item.id})" class="group cursor-pointer bg-tarjeta border border-borde hover:border-bronce rounded-2xl overflow-hidden transition flex flex-col justify-between">
+            <div>
+              <div class="bg-papel/70 h-60 flex items-center justify-center p-6">
+                <img src="${item.img}" alt="${item.nombre}" class="max-h-48 w-auto object-contain group-hover:scale-105 transition duration-300" />
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="text-[11px] tracking-[0.18em] uppercase text-suave font-semibold">${item.marca}</span>
+                  <span class="text-[10px] uppercase tracking-wider bg-[#E6F4EA] text-[#1E6B3A] px-2.5 py-0.5 rounded-full font-semibold">Disponible</span>
+                </div>
+                <h2 class="font-serif text-2xl text-tinta leading-snug">${item.nombre}</h2>
+                <p class="text-xs text-suave mt-2 line-clamp-2 leading-relaxed">${item.descripcion}</p>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-3 border-t border-borde/70 flex items-baseline justify-between">
+              <div>
+                <span class="text-[11px] text-suave block">3 ml desde</span>
+                <span class="text-lg font-semibold text-tinta">${formatMXN(precioBase)} MXN</span>
+              </div>
+              <span class="text-xs uppercase tracking-[0.14em] font-semibold text-tinta group-hover:text-bronce">Ver precios &rarr;</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function abrirDetalle(id) {
+      const item = fragancias.find(f => f.id === id);
+      if (!item) return;
+
+      productoActual = item;
+      const keys = Object.keys(item.precios);
+      opcionActiva = keys[0];
+
+      document.getElementById("detalle-breadcrumb").innerText =
+        `INICIO / ESSENZE SOBERANIS / ${item.marca} / ${item.nombre.toUpperCase()}`;
+      document.getElementById("detalle-marca").innerText = item.marca;
+      document.getElementById("detalle-titulo").innerText = item.nombre;
+      document.getElementById("detalle-descripcion").innerText = item.descripcion;
+      document.getElementById("detalle-notas").innerText = item.notas;
+
+      document.getElementById("detalle-imagen").src = item.img;
+      document.getElementById("detalle-imagen").alt = item.nombre;
+      document.getElementById("thumb-img-0").src = item.img;
+      document.getElementById("thumb-img-1").src = item.imgSecundaria || item.img;
+      cambiarImagenActiva(0);
+
+      const contOpciones = document.getElementById("detalle-opciones");
+      contOpciones.innerHTML = keys.map((op, idx) => `
+        <button type="button" id="op-${idx}" onclick="seleccionarOpcion('${op}', ${idx})"
+          class="op-btn px-4 py-2 rounded-xl border text-xs font-semibold tracking-wide transition ${idx === 0 ? 'border-tinta bg-tinta text-white' : 'border-borde bg-papel text-tinta hover:border-tinta'}">
+          ${op} · ${formatMXN(item.precios[op])}
+        </button>
+      `).join("");
+
+      actualizarPrecioDetalle();
+
+      document.getElementById("vista-catalogo").classList.add("hidden");
+      document.getElementById("vista-detalle").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function cambiarImagenActiva(indice) {
+      if (!productoActual) return;
+      const imgPrincipal = document.getElementById("detalle-imagen");
+      const t0 = document.getElementById("thumb-0");
+      const t1 = document.getElementById("thumb-1");
+
+      if (indice === 0) {
+        imgPrincipal.src = productoActual.img;
+        t0.className = "w-16 h-16 rounded-xl border-2 border-tinta p-1 bg-papel overflow-hidden";
+        t1.className = "w-16 h-16 rounded-xl border border-borde p-1 bg-papel overflow-hidden hover:border-bronce transition";
+      } else {
+        imgPrincipal.src = productoActual.imgSecundaria || productoActual.img;
+        t1.className = "w-16 h-16 rounded-xl border-2 border-tinta p-1 bg-papel overflow-hidden";
+        t0.className = "w-16 h-16 rounded-xl border border-borde p-1 bg-papel overflow-hidden hover:border-bronce transition";
+      }
+    }
+
+    function seleccionarOpcion(op, idx) {
+      opcionActiva = op;
+      const total = Object.keys(productoActual.precios).length;
+      for (let i = 0; i < total; i++) {
+        const btn = document.getElementById(`op-${i}`);
+        if (i === idx) {
+          btn.className = "op-btn px-4 py-2 rounded-xl border text-xs font-semibold tracking-wide transition border-tinta bg-tinta text-white";
+        } else {
+          btn.className = "op-btn px-4 py-2 rounded-xl border text-xs font-semibold tracking-wide transition border-borde bg-papel text-tinta hover:border-tinta";
+        }
+      }
+      actualizarPrecioDetalle();
+    }
+
+    function actualizarPrecioDetalle() {
+      const precio = productoActual.precios[opcionActiva];
+      document.getElementById("detalle-precio").innerText = formatMXN(precio);
+    }
+
+    function volverAlCatalogo() {
+      document.getElementById("vista-detalle").classList.add("hidden");
+      document.getElementById("vista-catalogo").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function irAlPrimerProducto() {
+      abrirDetalle(fragancias[0].id);
+    }
+
+    function abrirGuiaRapida() {
+      const m = document.getElementById("modal-asesor");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    }
+
+    function cerrarAsesor() {
+      const m = document.getElementById("modal-asesor");
+      m.classList.add("hidden");
+      m.classList.remove("flex");
+    }
+
+    document.getElementById("btn-pedir-wsp").addEventListener("click", () => {
+      if (!productoActual || !opcionActiva) return;
+      const precio = productoActual.precios[opcionActiva];
+      const mensaje = `Hola, quiero pedir en *ESSENZE SOBERANIS* el decant de *${productoActual.nombre}* (${productoActual.marca}) en presentación de *${opcionActiva}* (${formatMXN(precio)} MXN).`;
+      window.open(`https://wa.me/${TELEFONO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`, "_blank");
+    });
+
+    document.querySelectorAll(".tab-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        categoriaActiva = btn.getAttribute("data-cat");
+        document.querySelectorAll(".tab-link").forEach(b => {
+          b.className = "tab-link whitespace-nowrap text-suave hover:text-tinta pb-1 transition";
+        });
+        btn.className = "tab-link whitespace-nowrap text-tinta border-b border-tinta pb-1";
+        volverAlCatalogo();
+        renderCatalogo();
+      });
+    });
+
+    renderCatalogo();
+  </script>
+</body>
+</html>
